@@ -1,28 +1,30 @@
-import { useState, useEffect } from 'react';
-import Candidate from '../interfaces/Candidate.interface';
+import { useState, useEffect } from "react";
+import Candidate from "../interfaces/Candidate.interface";
 
 const SavedCandidates = () => {
   const [savedCandidates, setSavedCandidates] = useState<Candidate[]>([]);
 
   useEffect(() => {
-    const candidates = JSON.parse(localStorage.getItem('savedCandidates') || '[]');
+    const candidates = JSON.parse(localStorage.getItem("savedCandidates") || "[]");
     setSavedCandidates(candidates);
   }, []);
 
   return (
-    <div>
+    <div className="saved-candidates-container">
       <h1>Potential Candidates</h1>
       {savedCandidates.length > 0 ? (
-        <ul>
+        <ul className="candidate-list">
           {savedCandidates.map((candidate, index) => (
-            <li key={index}>
-              <img src={candidate.avatar} alt={`${candidate.username}'s avatar`} />
-              <p>Name: {candidate.name}</p>
-              <p>Username: {candidate.username}</p>
-              <p>Location: {candidate.location}</p>
-              <p>Email: {candidate.email}</p>
-              <p>Company: {candidate.company}</p>
-              <a href={candidate.html_url}>GitHub Profile</a>
+            <li key={index} className="candidate-card">
+              <img src={candidate.avatar} alt={`${candidate.username}'s avatar`} className="avatar" />
+              <div className="candidate-info">
+                <p><strong>Name:</strong> {candidate.name}</p>
+                <p><strong>Username:</strong> {candidate.username}</p>
+                <p><strong>Location:</strong> {candidate.location}</p>
+                <p><strong>Email:</strong> {candidate.email || "N/A"}</p>
+                <p><strong>Company:</strong> {candidate.company || "N/A"}</p>
+                <a href={candidate.html_url} target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+              </div>
             </li>
           ))}
         </ul>
@@ -34,3 +36,9 @@ const SavedCandidates = () => {
 };
 
 export default SavedCandidates;
+
+
+
+
+
+
